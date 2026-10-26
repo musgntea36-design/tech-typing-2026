@@ -1,0 +1,96 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>TECH TYPING 2026 · v5 | 중3 타자왕</title><style>
+:root{font-family:system-ui,'Noto Sans KR',sans-serif;color:#15283b;background:#f1f5fa}*{box-sizing:border-box}body{margin:0}header{background:linear-gradient(110deg,#153e69,#176b84);color:white;padding:22px max(18px,calc((100vw - 980px)/2))}h1{margin:4px 0;font-size:clamp(24px,5vw,34px)}h2{margin:0 0 14px}p{line-height:1.55}.sub{opacity:.85;font-size:13px}.wrap{max-width:980px;margin:18px auto;padding:0 14px 45px}.card{background:white;border-radius:18px;padding:20px;margin:14px 0;box-shadow:0 4px 18px #19395810}.tabs,.flex{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.tabs button{flex:1}button,select,input,textarea{font:inherit}button{border:0;border-radius:11px;background:#e6eef5;color:#183d5e;padding:12px 17px;font-weight:700;cursor:pointer}button.primary{background:#136b89;color:white}button:disabled{opacity:.4;cursor:not-allowed}button.active{background:#154a75;color:white}input,textarea,select{border:1.5px solid #b6c7d5;border-radius:10px;padding:12px;background:white;max-width:100%}input:focus,textarea:focus{outline:3px solid #8ad5ed;border-color:#137a9a}.full{width:100%}.hidden{display:none!important}.muted{color:#62778a;font-size:13px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.metric{background:#eaf4f8;border-radius:12px;text-align:center;padding:12px 6px}.metric b{display:block;font-size:clamp(20px,4vw,30px);color:#126480}.target{font-size:clamp(19px,3.3vw,25px);line-height:1.9;word-break:keep-all;overflow-wrap:anywhere;background:#f3f7fa;border-radius:12px;padding:18px;min-height:130px;white-space:pre-wrap}.good{background:#b9f1dc}.bad{background:#ffd1d1;color:#a32222}.current{border-bottom:3px solid #167c9d}.typing{font-size:19px;line-height:1.7;width:100%;height:135px;resize:vertical;margin-top:10px}.pill{border-radius:999px;background:#e3f2f7;padding:5px 12px;font-size:13px;font-weight:700}.notice{background:#fff7df;border-left:4px solid #e4ad35;padding:12px;border-radius:8px;font-size:14px}.code{font-family:ui-monospace,monospace;word-break:break-all;background:#eff5fa;padding:14px;border-radius:9px;font-size:13px;line-height:1.7}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px;border-bottom:1px solid #e0e8ef;text-align:left}th{background:#f0f6fa}.scroll{overflow-x:auto}.section-label{font-weight:800;margin-bottom:8px}.footer{text-align:center;color:#7a8b9b;font-size:12px;margin:24px} @media(max-width:520px){.card{padding:15px}.metrics{gap:5px}.metric{padding:10px 3px}.target{padding:12px}.typing{height:115px}}
+</style></head><body><header><div class="sub">MIDDLE SCHOOL TECHNOLOGY · 2026</div><h1>⌨️ TECH TYPING CHAMPIONSHIP</h1><div>중3 기술 한글·영문 타자왕 챌린지</div></header><main class="wrap"><div class="tabs"><button id="studentTab" class="active" onclick="switchTab('student')">🎮 학생용</button><button id="teacherTab" onclick="switchTab('teacher')">📊 교사용</button></div>
+<section id="student"><div class="card"><h2>경기 준비</h2><div class="flex"><label>참가코드 <input id="participant" maxlength="16" placeholder="예: BLUE7" autocomplete="off" style="width:170px"></label><button onclick="makeId()">익명코드 생성</button></div><p class="muted">이름·학번을 입력하지 마세요. 본 경기 결과를 모을 때 동일한 참가코드를 사용합니다.</p><div class="section-label">종목 선택</div><div class="flex"><button id="koBtn" class="active" onclick="setLang('ko')">🇰🇷 한글 타자</button><button id="enBtn" onclick="setLang('en')">🇺🇸 영문 타자</button></div><br><div class="section-label">모드 선택</div><div class="flex"><button id="practiceBtn" class="active" onclick="setMode('practice')">연습 (무제한)</button><button id="officialBtn" onclick="setMode('official')">본 경기 (2회)</button></div><p id="attemptNote" class="muted"></p><div class="notice">갤럭시 탭 화면 키보드로 입력하세요. 자동완성·자동수정·음성입력은 끄고, 동일한 입력 조건으로 경기를 진행하세요. 한글 조합 중인 글자는 확정된 뒤 기록에 반영됩니다.</div></div>
+<div class="card"><div class="flex" style="justify-content:space-between"><h2>60초 타자 경기 · 5문장</h2><span id="status" class="pill">준비</span></div><div class="metrics"><div class="metric"><small>남은 시간</small><b id="timer">60</b><small>초</small></div><div class="metric"><small id="speedLabel">분당 타수</small><b id="speed">0</b><small id="speedUnit">타/분</small></div><div class="metric"><small>정확도</small><b id="accuracy">100%</b><small>엄격한 판정 · 5글자 연속 일치 시 위치 보정</small></div></div><p class="muted" id="topic">Ⅴ·Ⅵ단원 기술 교과서 개념</p><div id="target" class="target">경기 시작을 누르면 제시문이 표시됩니다.</div><textarea id="typing" class="typing" placeholder="경기 시작 후 이곳을 눌러 입력하세요." disabled autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" inputmode="text"></textarea><div class="flex" style="margin-top:12px"><button id="startBtn" class="primary" onclick="startGame()">▶ 경기 시작</button><button id="stopBtn" onclick="stopGame()" disabled>중단</button></div><p class="muted">제시문은 매 경기 무작위 5문장만 출제되며 모두 정확히 입력하면 조기 종료됩니다. 타이머는 시작 버튼을 누르면 작동합니다. 본 경기 중단·화면 이탈 시 해당 시도는 소진됩니다. 붙여넣기는 차단됩니다.</p></div>
+<div id="resultBox" class="card hidden"><h2>🏅 경기 결과</h2><div id="resultSummary"></div><div id="resultCodeArea" class="hidden"><p><b>교사에게 전달할 결과코드</b></p><div id="resultCode" class="code"></div><div class="flex" style="margin-top:10px"><button class="primary" onclick="copyCode()">결과코드 복사</button><button onclick="downloadMyResult()">결과 TXT 저장</button></div><p class="muted">코드를 교사에게 전달하세요. 서버에 자동 전송되지 않습니다. 코드는 위조 방지 서명이 없는 참고용 기록입니다.</p></div></div></section>
+<section id="teacher" class="hidden"><div class="card"><h2>🔐 교사용 결과 관리</h2><p>학생에게 받은 결과코드를 붙여넣고 <b>기록 추가</b>를 누르세요. 여러 코드는 줄바꿈으로 구분합니다.</p><textarea id="importText" class="full" rows="5" placeholder="학생 결과코드를 여기에 붙여넣으세요."></textarea><div class="flex" style="margin-top:10px"><button class="primary" onclick="importCodes()">기록 추가</button><button onclick="exportCsv()">CSV 다운로드</button><button onclick="clearRecords()">전체 기록 삭제</button></div><p id="importStatus" class="muted"></p><div class="notice">교사용 기록은 이 기기의 브라우저에만 저장됩니다. 관리자 계정 인증이나 중앙 서버는 없습니다. 학생에게 교사용 화면을 공개하지 말고 교사 기기에서만 집계하세요. 브라우저 데이터 삭제 시 기록이 사라질 수 있으니 CSV로 백업하세요.</div></div><div class="card"><h2>🏆 종목별 순위</h2><div class="flex"><button id="rankKo" class="active" onclick="setRank('ko')">한글 순위</button><button id="rankEn" onclick="setRank('en')">영문 순위</button></div><p class="muted">순위 점수 = 분당 타수(영문 WPM) × 정확도 ÷ 100 · 정확도 90% 미만 순위 제외 · 동점 시 정확도 우선 · 참가코드별 최고 기록</p><div class="scroll"><table><thead><tr><th>순위</th><th>참가코드</th><th>속도</th><th>정확도</th><th>점수</th><th>시도</th></tr></thead><tbody id="rankingBody"></tbody></table></div></div><div class="card"><h2>수집된 전체 기록</h2><p id="totalCount" class="muted"></p><div class="scroll"><table><thead><tr><th>코드</th><th>종목</th><th>속도</th><th>정확도</th><th>점수</th><th>일시</th></tr></thead><tbody id="allBody"></tbody></table></div></div></section><div class="footer">교과서 Ⅴ. 에너지와 수송 기술의 세계 · Ⅵ. 생명 기술과 지속 가능한 발전을 바탕으로 재구성한 학습 문장</div></main>
+<script>
+'use strict';
+const SENTENCES={ko:[
+'태양 에너지는 태양의 빛과 열을 활용하는 재생 에너지이다.',
+'풍력 발전은 바람의 운동 에너지를 전기 에너지로 변환한다.',
+'수력 발전은 물의 위치 에너지와 운동 에너지를 이용한다.',
+'전기 자동차는 전동기를 이용하여 바퀴를 움직인다.',
+'수송 기술은 사람이나 물자를 한 장소에서 다른 장소로 이동시킨다.',
+'에너지 변환 장치는 에너지를 필요한 형태로 바꾸는 역할을 한다.',
+'수소를 연료로 사용하는 연료 전지는 화학 에너지를 전기 에너지로 바꾼다.',
+'지속 가능한 발전은 현재와 미래 세대의 삶을 함께 고려한다.',
+'생태 발자국은 인간의 생활이 자연에 미치는 부담을 나타낸다.',
+'적정 기술은 사용자의 환경과 필요에 알맞은 해결 방법을 찾는다.',
+'자원을 절약하고 재활용하는 행동은 환경 보호에 도움이 된다.',
+'바이오 에너지는 생물 자원에서 얻을 수 있는 에너지이다.',
+'해양 에너지는 파도와 조수 등 바다의 움직임을 활용한다.',
+'수송 수단을 설계할 때는 안전성과 효율성을 함께 고려해야 한다.',
+'기술의 발전은 생활을 편리하게 하지만 환경 문제도 고려해야 한다.'
+],en:[
+'Solar energy uses light and heat from the sun.',
+'Wind turbines turn wind energy into electricity.',
+'An electric car uses a motor to move its wheels.',
+'Water can be used to produce electric power.',
+'Energy can change from one form to another.',
+'Transportation moves people and goods between places.',
+'Renewable energy can help protect our environment.',
+'We should save energy for future generations.',
+'Sustainable development considers people and nature.',
+'Recycling helps us use resources more efficiently.',
+'Technology can solve problems in everyday life.',
+'Appropriate technology meets the needs of local people.',
+'Safety is important when we design transportation systems.',
+'Biomass energy comes from living or recently living materials.',
+'Our choices today can affect the future of the planet.'
+]};
+const $=id=>document.getElementById(id);let lang='ko',mode='practice',rankLang='ko',active=false,finished=false,remaining=60,deadline=0,interval=null,sequence='',typed='',attempt=0,startedAt=0,gameId='',lastResultCode='',composition=false;
+const ATT='techtyping_attempts_v3',REC='techtyping_records_v3';
+function getStore(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}}function saveStore(key,v){localStorage.setItem(key,JSON.stringify(v))}
+function switchTab(t){if(active)return alert('진행 중인 경기를 먼저 종료하세요.');$('student').classList.toggle('hidden',t!=='student');$('teacher').classList.toggle('hidden',t!=='teacher');$('studentTab').classList.toggle('active',t==='student');$('teacherTab').classList.toggle('active',t==='teacher');if(t==='teacher')renderTeacher()}
+function makeId(){const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let a=new Uint32Array(6);if(window.crypto?.getRandomValues)crypto.getRandomValues(a);else a=a.map(()=>Math.floor(Math.random()*10000));$('participant').value=Array.from(a,x=>alphabet[x%alphabet.length]).join('');refreshAttempts()}
+function setLang(l){if(active)return;lang=l;$('koBtn').classList.toggle('active',l==='ko');$('enBtn').classList.toggle('active',l==='en');$('speedLabel').textContent=l==='ko'?'분당 타수':'영문 WPM';$('speedUnit').textContent=l==='ko'?'타/분':'단어/분';refreshAttempts()}
+function setMode(m){if(active)return;mode=m;$('practiceBtn').classList.toggle('active',m==='practice');$('officialBtn').classList.toggle('active',m==='official');refreshAttempts()}
+function cleanId(){return $('participant').value.trim().toUpperCase().replace(/[^A-Z0-9_-]/g,'').slice(0,16)}
+function attemptKey(){return cleanId()+':'+lang}function refreshAttempts(){const n=(getStore(ATT,{})[attemptKey()]||0);$('attemptNote').textContent=mode==='practice'?'연습은 횟수 제한이 없습니다.':`이 브라우저에서 사용한 공식 시도: ${n}/2회 (기기별 제한)`;$('startBtn').disabled=active||(mode==='official'&&n>=2)}
+function buildSequence(){let list=[...SENTENCES[lang]];for(let i=list.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]]}return list.slice(0,5).join(' ')}
+function startGame(){if(active)return;const id=cleanId();if(!id){alert('먼저 익명 참가코드를 생성하거나 입력하세요.');return}if(mode==='official'&&(getStore(ATT,{})[attemptKey()]||0)>=2){alert('이 기기의 공식 시도 2회를 모두 사용했습니다.');return}if(mode==='official'){let obj=getStore(ATT,{});obj[attemptKey()]=(obj[attemptKey()]||0)+1;saveStore(ATT,obj);attempt=obj[attemptKey()]}else attempt=0;
+$('participant').value=id;active=true;finished=false;remaining=60;typed='';sequence=buildSequence();gameId=crypto?.randomUUID?.()||String(Date.now())+Math.random();$('typing').value='';$('typing').disabled=false;$('participant').disabled=true;$('startBtn').disabled=true;$('stopBtn').disabled=false;$('resultBox').classList.add('hidden');$('status').textContent=mode==='official'?'본 경기 진행 중':'연습 진행 중';$('timer').textContent='60';$('speed').textContent='0';$('accuracy').textContent='100%';$('topic').textContent=(lang==='ko'?'한글':'영문')+' · 기술 교과서 Ⅴ·Ⅵ단원';startedAt=Date.now();deadline=startedAt+60000;renderTarget();interval=setInterval(tick,120);$('typing').focus();refreshAttempts()}
+// Conservative alignment: only resynchronize across one extra or missing character
+// when FIVE subsequent characters match exactly. Never match a distant substring.
+function alignment(){
+ const a=Array.from(typed.normalize('NFC')),b=Array.from(sequence.normalize('NFC'));
+ const marks=Array(b.length).fill(''),extra=Array(b.length+1).fill(0);
+ let i=0,j=0,correct=0,errors=0;
+ const anchor=(ai,bj)=>{
+   if(ai+5>a.length || bj+5>b.length)return false;
+   for(let k=0;k<5;k++)if(a[ai+k]!==b[bj+k])return false;
+   return true;
+ };
+ while(i<a.length && j<b.length){
+   if(a[i]===b[j]){marks[j]='good';correct++;i++;j++;continue}
+   const added=anchor(i+1,j),missing=anchor(i,j+1);
+   if(added&&!missing){extra[j]++;errors++;i++;continue}
+   if(missing&&!added){marks[j]='bad';errors++;j++;continue}
+   marks[j]='bad';errors++;i++;j++;
+ }
+ while(i<a.length){extra[j]++;errors++;i++}
+ return {marks,extra,correct,errors,position:j};
+}
+function metrics(){let elapsed=Math.max(1,(Date.now()-startedAt)/1000),n=Array.from(typed).length,al=alignment(),c=al.correct,acc=n?100*Math.max(0,1-al.errors/Math.max(n,al.position)):100;let speed=lang==='ko'?Math.round(n*60/elapsed):Math.round((n/5)*60/elapsed);return {n,c,acc:Math.round(acc*10)/10,speed,elapsed,al}}
+function renderTarget(al){al=al||alignment();let a=Array.from(sequence),html='';const esc=x=>x.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');for(let i=0;i<a.length;i++){if(al.extra[i])html+='<span class="bad" title="추가 입력 오류">＋'+al.extra[i]+'</span>';let cls=al.marks[i]||(i===al.position?'current':'');html+=cls?`<span class="${cls}">${esc(a[i])}</span>`:esc(a[i]);if(i>Math.max(180,al.position+120))break} $('target').innerHTML=html}
+function updateLive(){let m=metrics();$('speed').textContent=m.speed;$('accuracy').textContent=m.acc.toFixed(1)+'%';renderTarget(m.al)}
+function tick(){if(!active)return;remaining=Math.max(0,Math.ceil((deadline-Date.now())/1000));$('timer').textContent=remaining;updateLive();if(remaining<=0)finishGame(false)}
+function stopGame(){if(active&&confirm('경기를 중단할까요? 본 경기라면 시도가 소진됩니다.'))finishGame(true)}
+function finishGame(aborted){if(!active)return;active=false;finished=true;clearInterval(interval);$('typing').disabled=true;$('participant').disabled=false;$('stopBtn').disabled=true;$('status').textContent=aborted?'중단됨':'경기 종료';$('timer').textContent=aborted?remaining:0;const m=metrics();$('resultBox').classList.remove('hidden');$('resultSummary').textContent=`${aborted?'중단 기록':'완료 기록'} · ${lang==='ko'?'한글':'영문'} · 속도 ${m.speed} ${lang==='ko'?'타/분':'WPM'} · 정확도 ${m.acc.toFixed(1)}% · 일치 글자 ${m.c}개`;
+$('resultCodeArea').classList.add('hidden');if(mode==='official'&&!aborted){let result={v:5,id:cleanId(),lang,mode:'official',attempt,speed:m.speed,accuracy:m.acc,correct:m.c,typed:m.n,seconds:60,at:new Date().toISOString(),gid:gameId};lastResultCode='TT26V5.'+b64encode(JSON.stringify(result));$('resultCode').textContent=lastResultCode;$('resultCodeArea').classList.remove('hidden')}else lastResultCode='';refreshAttempts()}
+function b64encode(str){let bytes=new TextEncoder().encode(str),binary='';for(let b of bytes)binary+=String.fromCharCode(b);return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function b64decode(str){let binary=atob(str.replace(/-/g,'+').replace(/_/g,'/')),bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));return new TextDecoder().decode(bytes)}
+async function copyCode(){try{await navigator.clipboard.writeText(lastResultCode);alert('결과코드를 복사했습니다.')}catch{prompt('아래 코드를 길게 눌러 복사하세요.',lastResultCode)}}
+function downloadFile(name,content,type){let blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function downloadMyResult(){if(lastResultCode)downloadFile('TECH_Typing_'+cleanId()+'_'+lang+'.txt',lastResultCode+'\n','text/plain;charset=utf-8')}
+function importCodes(){let lines=$('importText').value.trim().split(/\s+/).filter(Boolean),records=getStore(REC,[]),added=0,dup=0,invalid=0;for(let code of lines){try{if(!code.startsWith('TT26V5.'))throw Error('prefix');let x=JSON.parse(b64decode(code.slice(7)));if(x.v!==5||x.mode!=='official'||!['ko','en'].includes(x.lang)||! /^[A-Z0-9_-]{1,16}$/.test(x.id)||![1,2].includes(x.attempt)||!Number.isFinite(x.speed)||x.speed<0||x.speed>1500||!Number.isFinite(x.accuracy)||x.accuracy<0||x.accuracy>100||x.seconds!==60||typeof x.gid!=='string'||!Number.isFinite(Date.parse(x.at)))throw Error('fields');if(records.some(r=>r.gid===x.gid)){dup++;continue}records.push(x);added++}catch{invalid++}}saveStore(REC,records);$('importStatus').textContent=`추가 ${added}건 · 중복 ${dup}건 · 유효하지 않은 코드 ${invalid}건`;$('importText').value='';renderTeacher()}
+function score(r){return Math.round(r.speed*r.accuracy/100*10)/10}
+function setRank(l){rankLang=l;$('rankKo').classList.toggle('active',l==='ko');$('rankEn').classList.toggle('active',l==='en');renderTeacher()}
+function td(tr,s){let c=document.createElement('td');c.textContent=String(s);tr.append(c)}
+function renderTeacher(){let rec=getStore(REC,[]),best=new Map();for(let r of rec.filter(x=>x.lang===rankLang&&x.accuracy>=90)){let k=r.id,old=best.get(k);if(!old||score(r)>score(old)||score(r)===score(old)&&r.accuracy>old.accuracy)best.set(k,r)}let sorted=[...best.values()].sort((a,b)=>score(b)-score(a)||b.accuracy-a.accuracy||b.speed-a.speed);$('rankingBody').replaceChildren();sorted.forEach((r,i)=>{let tr=document.createElement('tr');[i+1,r.id,r.speed+(rankLang==='ko'?' 타/분':' WPM'),r.accuracy+'%',score(r),r.attempt+'/2'].forEach(v=>td(tr,v));$('rankingBody').append(tr)});$('totalCount').textContent=`수집된 공식 기록 ${rec.length}건 · 순위 조건 충족 ${sorted.length}명`;$('allBody').replaceChildren();rec.slice().reverse().forEach(r=>{let tr=document.createElement('tr');[r.id,r.lang==='ko'?'한글':'영문',r.speed,r.accuracy+'%',score(r),new Date(r.at).toLocaleString('ko-KR')].forEach(v=>td(tr,v));$('allBody').append(tr)})}
+function exportCsv(){let rows=getStore(REC,[]),head=['참가코드','종목','시도','속도','정확도','점수','일치글자','입력글자','일시','경기ID'],out=[head,...rows.map(r=>[r.id,r.lang,r.attempt,r.speed,r.accuracy,score(r),r.correct,r.typed,r.at,r.gid])].map(row=>row.map(x=>'"'+String(x??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');downloadFile('TECH_Typing_2026_Results.csv','\ufeff'+out,'text/csv;charset=utf-8')}
+function clearRecords(){if(confirm('교사 기기에 수집한 모든 기록을 삭제할까요? CSV 백업을 먼저 권장합니다.')&&confirm('정말 전체 삭제하시겠습니까?')){localStorage.removeItem(REC);renderTeacher()}}
+$('typing').addEventListener('compositionstart',()=>composition=true);$('typing').addEventListener('compositionend',()=>{composition=false;if(active){typed=$('typing').value.slice(0,sequence.length);updateLive();if(typed===sequence)finishGame(false)}});$('typing').addEventListener('input',()=>{if(!active||composition)return;typed=$('typing').value.slice(0,sequence.length);if($('typing').value!==typed)$('typing').value=typed;updateLive();if(typed===sequence)finishGame(false)});$('typing').addEventListener('paste',e=>e.preventDefault());$('typing').addEventListener('drop',e=>e.preventDefault());$('typing').addEventListener('beforeinput',e=>{if(e.inputType==='insertFromPaste'||e.inputType==='insertFromDrop')e.preventDefault()});document.addEventListener('visibilitychange',()=>{if(active&&document.hidden&&mode==='official')finishGame(true)});window.addEventListener('pagehide',()=>{if(active&&mode==='official')finishGame(true)});$('participant').addEventListener('input',refreshAttempts);makeId();setLang('ko');renderTeacher();
+</script></body></html>
